@@ -1,0 +1,21 @@
+FROM lcr.loongnix.cn/library/golang:1.26
+
+RUN apt-get update && apt-get install -y \
+    git \
+    ca-certificates \
+    wget \
+    && rm -rf /var/lib/apt/lists/*
+
+# nodejs
+RUN wget -O /tmp/node.tar.gz https://unofficial-builds.nodejs.org/download/release/v26.5.0/node-v26.5.0-linux-loong64.tar.gz \
+    && mkdir -p /opt/node \
+    && tar -xzf /tmp/node.tar.gz -C /opt/node --strip-components=1 \
+    && rm -f /tmp/node.tar.gz
+
+ENV PATH=/opt/node/bin:$PATH
+
+# 安装 corepack
+RUN npm install -g corepack@latest \
+    && corepack enable
+
+CMD ["/bin/bash"]
