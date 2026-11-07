@@ -1,6 +1,8 @@
 name: Auto Build pyroscope (Self-hosted)
 
 on:
+  schedule:
+    - cron: '11 21 * * *'
   workflow_dispatch:
 
 env:
